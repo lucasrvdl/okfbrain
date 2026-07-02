@@ -5,10 +5,10 @@
   "description": "Build fidelity-first digital \"brains\" — OKF knowledge bases in plain markdown — and grow them to full field coverage, autonomously, in audit-expand loops: one phrase, any model, any harness. Per-domain fidelity profiles, provenance, explicit gaps, deterministic engine.",
   "author": {
     "name": "Lucas Lucena",
-    "url": "https://github.com/Lucasrvdl"
+    "url": "https://github.com/lucasrvdl"
   },
-  "homepage": "https://github.com/Lucasrvdl/okfbrain",
-  "repository": "https://github.com/Lucasrvdl/okfbrain",
+  "homepage": "https://github.com/lucasrvdl/okfbrain",
+  "repository": "https://github.com/lucasrvdl/okfbrain",
   "license": "MIT",
   "keywords": [
     "okf",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
-  "name": "Lucasrvdl",
+  "name": "lucasrvdl",
   "description": "okfbrain — fidelity-first digital \"brains\" in markdown.",
   "owner": {
     "name": "Lucas Lucena"
