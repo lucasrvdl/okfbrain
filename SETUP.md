@@ -1,6 +1,6 @@
 # SETUP — a new machine in ~10 minutes
 
-Get okfbrain running on a fresh computer (Windows, macOS or Linux). Brains are
+Get okfbrain running on a fresh computer (Windows, macOS or Linux). "Brains" are
 just folders of markdown — the "installation" is only the skill, Python, and
 whichever executors you plan to use.
 

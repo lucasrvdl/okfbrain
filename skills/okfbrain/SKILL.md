@@ -1,8 +1,9 @@
 ---
 name: okfbrain
 description: >-
-  Build and maintain fidelity-first OKF knowledge "brains" — folders of cross-linked
-  markdown any AI can read — and GROW them big, autonomously, in audit→expand loops.
+  Build and maintain fidelity-first digital "brains" — OKF knowledge bases: folders
+  of cross-linked markdown any AI can read — and grow them to full field coverage,
+  autonomously, in audit→expand loops.
   ONE intent-driven skill: say what you want in natural language (learn a subject,
   deepen it, fix/add a concept, ask it questions, audit, teach from it, merge
   brains, or loop) and it applies the OKF method with per-domain fidelity,
@@ -16,7 +17,10 @@ argument-hint: "<what you want, in natural language> (e.g. learn about X using t
 allowed-tools: Read Write Edit Bash Grep Glob WebSearch WebFetch AskUserQuestion
 ---
 
-# okfbrain — fidelity-first OKF knowledge brains
+# okfbrain — fidelity-first digital "brains" in the Open Knowledge Format
+
+A "brain" here is a metaphor, and a modest one: just a folder of cross-linked
+markdown files a human or any AI can read, query and extend. No magic implied.
 
 ONE skill, driven by INTENT: the user says what they want in plain language; you
 infer the operation (table below) — there are **no rigid subcommands**. Format =

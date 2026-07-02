@@ -1,13 +1,14 @@
 # 🧠 okfbrain
 
-**Build fidelity-first knowledge "brains" any AI can read — in one phrase.**
+**Build fidelity-first digital "brains" — knowledge bases any AI can read — from a single phrase.**
 
 okfbrain is a **single, intent-driven agent skill** (Claude Code first, any harness
 welcome) that turns any subject into
 an [Open Knowledge Format](https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing)
-(OKF) **brain**: a folder of cross-linked markdown that humans, Obsidian, and any AI
+(OKF) **"brain"**: a folder of cross-linked markdown that humans, Obsidian, and any AI
 can read — with **per-domain fidelity**, **provenance**, and **explicit gaps** — and
-then **grows it, autonomously, until it covers the field**.
+then **grows it, autonomously, until it covers the field**. The "brain" is a metaphor,
+and a modest one: it's all just markdown files.
 
 *A rigorous superset of the "LLM wiki" pattern: wikis that mechanically verify their
 own quotes, grown by fleets of cheap models under strong audit.*
