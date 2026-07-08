@@ -96,6 +96,9 @@ for you; spawning pi from your own scripts, append `</dev/null`.
 Windows note: npm installs pi as a `.cmd` shim, and cmd.exe truncates command
 lines at the first newline — so okf_loop hands multiline prompts to `.cmd`
 CLIs via stdin instead (pi reads piped stdin as the message; nothing to set).
+Optional companion package — key-less `web_fetch` (raw-bytes-first) +
+opt-in `web_search` + the miner contract as an Agent Skill:
+`pi install git:github.com/lucasrvdl/okf-miner`.
 
 ### 8. Agent CLIs that aren't opencode (claude, codex, gemini, hermes…)
 The alias is just the full command, e.g.
