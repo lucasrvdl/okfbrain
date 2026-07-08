@@ -7,6 +7,8 @@
     "audit": "claude -p --allowedTools Bash(py:*),Bash(uv:*),WebFetch,WebSearch --permission-mode acceptEdits --model sonnet",
     "flash": "opencode run --model opencode-go/deepseek-v4-flash",
     "flash-pro": "opencode run --model opencode-go/deepseek-v4-pro",
+    "pi-flash": "pi -p -nc --no-session --provider opencode-go --model deepseek-v4-flash",
+    "pi-local": "pi -p -nc --no-session --provider ollama --model <your-local-model>",
     "local": "opencode run --model ollama/<your-local-model>",
     "lmstudio": "opencode run --model lmstudio/<model-id-loaded-in-lm-studio>",
     "openrouter": "opencode run --model openrouter/<provider/model>",

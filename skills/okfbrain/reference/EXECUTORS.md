@@ -81,7 +81,23 @@ New block in opencode.jsonc:
 ```
 Alias: `"m": "opencode run --model minha-api/<model-id>"`.
 
-### 7. Agent CLIs that aren't opencode (claude, codex, gemini, hermes…)
+### 7. Pi coding agent (pi.dev — multi-provider, zero shared state)
+Pi is a minimal agentic CLI (read/write/edit/bash) whose providers and keys are
+configured in Pi itself — never in executors.json.
+1. `npm install -g --ignore-scripts @earendil-works/pi-coding-agent` (CLI: `pi`).
+2. Configure the provider/key once inside Pi (run `pi`, then `/login`; stored
+   under `~/.pi/agent/`).
+3. Alias: `"pi-x": "pi -p -nc --no-session --provider <provider> --model <id>"`.
+   - `-p` non-interactive · `-nc` ignores AGENTS.md/CLAUDE.md (miners run clean)
+   - `--no-session` = ephemeral, nothing written to shared state — parallel pi
+     miners never contend (session-database CLIs are the ones that deadlock).
+Note: `pi -p` waits forever when stdin is an open pipe — okf_loop closes stdin
+for you; spawning pi from your own scripts, append `</dev/null`.
+Windows note: npm installs pi as a `.cmd` shim, and cmd.exe truncates command
+lines at the first newline — so okf_loop hands multiline prompts to `.cmd`
+CLIs via stdin instead (pi reads piped stdin as the message; nothing to set).
+
+### 8. Agent CLIs that aren't opencode (claude, codex, gemini, hermes…)
 The alias is just the full command, e.g.
 `"haiku": "claude -p --model haiku --permission-mode acceptEdits --allowedTools Bash(py:*),Bash(uv:*),WebFetch,WebSearch"`.
 Requirement: the CLI must be AGENTIC (file+shell tools) and run non-interactively.
@@ -111,7 +127,9 @@ okf_loop.py <brain> --cycles 1 --miners 6 --no-integrate   # master session inte
 ```
 
 Miners are write-fenced to `_staging/<slug>/` (draft + raw sources); only the
-integrator writes the brain. Doctrine: LOOP.md "Fan-out". Timing note from a
+integrator writes the brain. Prefer stateless miners (recipe 7's `--no-session`
+pi aliases) for big waves — CLIs with a shared session store can lock under
+concurrency. Doctrine: LOOP.md "Fan-out". Timing note from a
 harness turn: one wave lasts about as long as its SLOWEST miner — with the
 ~10 min shell timeout, prefer `--cycles 1` per invocation and background runs
 for big waves.

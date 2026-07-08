@@ -41,6 +41,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -380,16 +381,35 @@ def run_agent(agent_cmd: str, prompt: str, brain: Path, timeout: int,
               label: str = "agent") -> str:
     out = ""
     try:
-        kw: dict = dict(cwd=str(brain), stdout=subprocess.PIPE,
+        kw: dict = dict(cwd=str(brain), stdin=subprocess.DEVNULL,
+                        stdout=subprocess.PIPE,
                         stderr=subprocess.STDOUT, text=True,
                         encoding="utf-8", errors="replace")
         if os.name == "nt":
             kw["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
         else:
             kw["preexec_fn"] = os.setsid
-        proc = subprocess.Popen(agent_cmd.split() + [prompt], **kw)
+        argv = agent_cmd.split() + [prompt]
+        # stdin must be CLOSED (pi -p blocks forever reading an open pipe) and
+        # the executable resolved via PATH (npm ships .cmd shims Windows's
+        # CreateProcess won't find bare) — both field-tested.
+        exe = shutil.which(argv[0])
+        if exe:
+            argv[0] = exe
+        # Windows script shims (.cmd/.bat) run through cmd.exe, which cuts the
+        # command line at the first newline — a multiline prompt arrives as its
+        # first line only (field-tested: a miner got one line of its contract
+        # and ignored the write-fence). For those, deliver the prompt on stdin
+        # (piped-stdin-to-EOF is the message convention of such CLIs, e.g. pi).
+        via_stdin = (os.name == "nt"
+                     and Path(argv[0]).suffix.lower() in (".cmd", ".bat", ".ps1"))
+        if via_stdin:
+            argv = argv[:-1]
+            kw["stdin"] = subprocess.PIPE
+        proc = subprocess.Popen(argv, **kw)
         try:
-            out, _ = proc.communicate(timeout=timeout)
+            out, _ = proc.communicate(input=prompt if via_stdin else None,
+                                      timeout=timeout)
         except subprocess.TimeoutExpired:
             _kill_tree(proc)
             try:

@@ -46,6 +46,17 @@ what you want in natural language and the AI infers the operation:
 The non-negotiables are always on: never invent, gaps explicit, provenance on every
 concept, validate at the end.
 
+## What's new in 0.12 — stateless miners (Pi executor) + hardened spawning
+- **Pi as an executor** (recipe 7 in `reference/EXECUTORS.md`): `pi -p -nc
+  --no-session` miners carry zero shared state on disk, so parallel fan-out
+  waves never contend — session-database CLIs are the ones that deadlock.
+  Shipped aliases: `pi-flash`, `pi-local`.
+- **Spawning hardened** (okf_loop, field-tested): executor stdin is closed
+  (CLIs like `pi -p` block forever reading an open pipe); executables resolve
+  via PATH so npm `.cmd` shims work on Windows; and multiline prompts reach
+  `.cmd` CLIs via stdin — cmd.exe truncates command lines at the first
+  newline, which used to hand a miner only the first line of its contract.
+
 ## What's new in 0.11 — learn-on-miss (asking teaches the brain)
 - **Ask closes its own gaps**: a question the brain can't answer (fully or partly)
   is researched on the spot — a micro-Expand at the brain's fidelity profile
