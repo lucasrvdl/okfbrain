@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = ["pyyaml>=6"]
 # ///
-"""okf_verify.py — MECHANICAL fidelity checks for an OKF brain.
+"""okf_verify.py — MECHANICAL fidelity checks for an OKF gem.
 
 Weak/cheap models grade themselves leniently; this script doesn't. It checks
 what a machine CAN check, so the human/strong-model audit only has to catch
@@ -22,7 +22,7 @@ Default is informational (exit 0). `--strict` exits 1 on any unmatched quote
 or uncited concept — the mode weak-model loop cycles MUST run on the concepts
 they wrote (`--concept <id>` to scope).
 
-Run:  uv run okf_verify.py <brain> [--concept <id>] [--min-quote-len 20] [--strict] [--json]
+Run:  uv run okf_verify.py <gem> [--concept <id>] [--min-quote-len 20] [--strict] [--json]
 """
 from __future__ import annotations
 
@@ -102,16 +102,16 @@ def quote_blocks(body: str) -> list[str]:
     return blocks
 
 
-def load_sources(brain: Path) -> list[tuple[str, str]]:
+def load_sources(gem: Path) -> list[tuple[str, str]]:
     out = []
     for d in SOURCE_DIRS:
-        base = brain / d
+        base = gem / d
         if not base.is_dir():
             continue
         for p in sorted(base.rglob("*")):
             if p.is_file() and p.suffix.lower() in SOURCE_EXTS:
                 try:
-                    out.append((p.relative_to(brain).as_posix(),
+                    out.append((p.relative_to(gem).as_posix(),
                                 norm(p.read_text(encoding="utf-8", errors="ignore"))))
                 except OSError:
                     pass
@@ -120,25 +120,25 @@ def load_sources(brain: Path) -> list[tuple[str, str]]:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Mechanical fidelity checks (citations, quote match, weasel lint).")
-    ap.add_argument("brain", type=Path)
+    ap.add_argument("gem", type=Path)
     ap.add_argument("--concept", help="check only this concept id (or path suffix)")
     ap.add_argument("--min-quote-len", type=int, default=20,
                     help="ignore normalized quotes shorter than this (default 20 chars)")
     ap.add_argument("--strict", action="store_true", help="exit 1 on unmatched quotes / uncited concepts")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
-    if not args.brain.is_dir():
-        print(f"error: {args.brain} is not a directory", file=sys.stderr)
+    if not args.gem.is_dir():
+        print(f"error: {args.gem} is not a directory", file=sys.stderr)
         return 2
 
-    sources = load_sources(args.brain)
+    sources = load_sources(args.gem)
     src_blob_all = " ".join(stext for _, stext in sources)
     uncited, unmatched, weasel = [], [], []
     prose_unmatched, framing = [], []
     checked = quotes_total = quotes_matched = prose_total = prose_matched = 0
 
-    for p in sorted(args.brain.rglob("*.md")):
-        rel = p.relative_to(args.brain).as_posix()
+    for p in sorted(args.gem.rglob("*.md")):
+        rel = p.relative_to(args.gem).as_posix()
         cid = rel[:-3]
         if p.name in RESERVED or is_meta(rel):
             continue
@@ -205,7 +205,7 @@ def main() -> int:
                                 "line": line.strip()[:90]})
 
     report = {
-        "brain": str(args.brain),
+        "gem": str(args.gem),
         "concepts_checked": checked,
         "sources_indexed": len(sources),
         "quotes": {"total": quotes_total, "matched": quotes_matched},
@@ -222,7 +222,7 @@ def main() -> int:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 1 if (args.strict and failed) else 0
 
-    print(f"okf-verify — {args.brain.name} — {checked} concept(s), {len(sources)} saved source file(s)")
+    print(f"okf-verify — {args.gem.name} — {checked} concept(s), {len(sources)} saved source file(s)")
     print(f"  blockquotes: {quotes_matched}/{quotes_total} matched · prose quotes: "
           f"{prose_matched}/{prose_total} matched")
     for u in unmatched[:10]:

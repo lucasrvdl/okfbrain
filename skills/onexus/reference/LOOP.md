@@ -1,6 +1,6 @@
-# okfbrain LOOP — grow a brain to full field coverage, autonomously
+# onexus LOOP — grow a Gem to full field coverage, autonomously
 
-You are here because the intent is loop/grow: `/okfbrain <brain> /loop [orders]`,
+You are here because the intent is loop/grow: `/onexus <gem> /loop [orders]`,
 "fica melhorando em loop", "grow until done", or a create/expand where the user
 asked for depth/completeness. This file is the loop doctrine. **If you start a
 cycle and this checklist is not verbatim in your context (compaction, wake-up,
@@ -9,13 +9,13 @@ fresh session): RE-READ this file, and SKILL.md's non-negotiables with it.**
 **Mission:** repeated audit→expand cycles, **in-session** (YOU drive them, with
 full source/web access; SOLO by default — spawn sub-agents only under
 "Fan-out" below, which the user must have asked for; pace with the harness's
-scheduler when it has one, else run cycles back-to-back), until the brain covers
+scheduler when it has one, else run cycles back-to-back), until the Gem covers
 the FIELD. Engineer it as a durable feedback machine, not a
 free-running prompt. **Bigger is the default outcome:** a healthy loop keeps
 finding MORE map, not less. Every fidelity rule of SKILL.md binds every cycle —
 growth never relaxes fidelity.
 
-## Durable memory — `<brain>/_loop-state.md`
+## Durable memory — `<gem>/_loop-state.md`
 
 Create it on cycle 1 if absent (template: `templates/loop-state.md`). Context WILL
 be compacted on long runs; whatever lives only in context gets lost — coverage,
@@ -29,7 +29,7 @@ might be.
 
 ## The cycle — Observe → Choose → Act → Verify → Record → Repeat/Stop
 
-1. **Observe** — read `_loop-state.md` + fresh brain facts: `okf_status.py
+1. **Observe** — read `_loop-state.md` + fresh Gem facts: `okf_status.py
    --json` (counts, orphans, thin nodes, pending links, gaps, queue) and
    `okf_validate.py --json` (errors). Never act on stale or remembered state.
 
@@ -40,7 +40,7 @@ might be.
    happen to have. **Hard rule: "I read every source I found" ≠ "I covered the
    subject"** — sub-areas thin in your sources are still gaps (this exact
    confusion made old loops quit early). Refill along the **growth axes**:
-   - **New leaf topics** the field outline demands and the brain lacks.
+   - **New leaf topics** the field outline demands and the Gem lacks.
    - **Split** any fat concept (3+ separable, separately-sourceable ideas) into
      linked children.
    - **Deepen** an existing concept: primary sources, counterpoints, variants,
@@ -53,7 +53,7 @@ might be.
    checklist** so half-done items show as `[~] partial`, never silently done.
 
 3. **Act** — ONE bounded, faithful EXPAND (sources: user-given → local → web).
-   Before creating any file, search the brain (`okf_search.py`) for the topic —
+   Before creating any file, search the Gem (`okf_search.py`) for the topic —
    an existing concept gets deepened/split, never twinned.
    Additive only; no unrelated changes folded in; preserve existing work. The
    content comes **only from sources you actually read this loop** — never from
@@ -81,7 +81,7 @@ might be.
 6. **Repeat / Stop** — end each cycle in ONE line with a named terminal state:
    `improved: <what>` · `blocked: needs <source>` · `nothing-resolvable`.
 
-## Map discipline (what makes brains BIG and honest)
+## Map discipline (what makes Gems BIG and honest)
 
 - **Anchor (cycle 1):** research an authoritative EXTERNAL outline of the field —
   a reference work's table of contents, a syllabus, a canonical taxonomy — and
@@ -113,7 +113,7 @@ continue; stopping is what you must prove.** Otherwise run to the user's bound
   conservative branch, record the fork under "Open questions" in the state file,
   keep moving. Surface open questions in the end-of-turn status, not as blockers.
 - **Batch cycles:** run several full cycles per turn while healthy (3–6 is the
-  proven rhythm — that is how the real brains got built), each one passing its own
+  proven rhythm — that is how the real Gems got built), each one passing its own
   gates and updating state. Then yield: a brief status in the user's language
   (cycles run, concepts added, map delta, next queue head, terminal line) and
   schedule the next wake-up (self-paced) or honor the fixed cadence the user
@@ -139,7 +139,7 @@ a stronger auditor:
   cheap executor only works queue items. It never re-plans the map.
 - **One micro-task per cycle.** The cycle prompt names the exact queue item /
   gap to resolve (okf_loop.py injects this automatically). No open-ended
-  "improve the brain".
+  "improve the Gem".
 - **Evidence first.** Save the raw source (download into `_sources/`, or
   `okf_excerpt.py` into `references/`) BEFORE writing; write only what traces
   to saved files. `_sources/` is `_`-meta: staging evidence, not knowledge.
@@ -181,7 +181,7 @@ a stronger auditor:
 Solo in-session is the default. When the user asks for parallel workers
 ("miners", "mineradores", "agentes em paralelo", "N ao mesmo tempo"), run
 ARCHITECT → MINERS → INTEGRATOR. Fidelity survives parallelism by ONE rule:
-**miners never write knowledge into the brain** — they stage evidence; a strong
+**miners never write knowledge into the Gem** — they stage evidence; a strong
 integrator audits and writes.
 
 **Roles**
@@ -194,7 +194,7 @@ integrator audits and writes.
   `draft.md` (every claim with inline `[source: …]`; `## Proposed links`;
   `## Verbatim wanted` = source file + start/end markers — verbatim is NEVER
   typed by a miner), `sources/` (raw downloads + MANIFEST.md), `notes.md`
-  (unsourceable claims → candidate gaps; leads). Miners read the brain freely
+  (unsourceable claims → candidate gaps; leads). Miners read the Gem freely
   but write NOTHING outside their staging folder and never touch `index.md`,
   `log.md`, `_loop-state.md`. Ceiling: `confidence: medium` + `needs-review`.
 - **Integration, per staged folder:** source-trace the draft against its
@@ -211,7 +211,7 @@ integrator audits and writes.
   say so in ONE line, offer the nearest harness tier (cost → small tier;
   fidelity → mid tier), and keep moving — never stall on it.
 - **Any-vendor miners** exist through the script mini-harness:
-  `okf_loop.py <brain> --miners N [--miner-executor <alias>]
+  `okf_loop.py <gem> --miners N [--miner-executor <alias>]
   [--integrate-executor audit]` — each miner is an executor CLI from
   `executors.json` (opencode → DeepSeek/OpenRouter/Ollama…, `claude -p`, …).
   With a strong session already open, prefer

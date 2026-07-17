@@ -3,24 +3,24 @@
 # requires-python = ">=3.11"
 # dependencies = ["pyyaml>=6"]
 # ///
-"""okf_search.py — lexical search inside an OKF brain (pure Python BM25).
+"""okf_search.py — lexical search inside an OKF gem (pure Python BM25).
 
 Why: grep misses inflections and diacritics. This ranks whole concepts with
 BM25 over weighted fields (title > description/tags/id > body) and FOLDS
 DIACRITICS both ways, so `diksa` finds "Dīkṣā" and `puja` finds "pūjā".
 Original-script tokens (Devanagari etc.) are kept verbatim, so searching
 in the source script works too. Lexical only — it does not know synonyms;
-for those, try the other language/term the brain itself uses.
+for those, try the other language/term the gem itself uses.
 
 Use it before writing (deepen instead of duplicating), to answer "what does
-the brain say about X", and to aim a loop cycle.
+the gem say about X", and to aim a loop cycle.
 
-HYBRID: when the brain has a semantic index (`_index/embeddings.npz`, built by
+HYBRID: when the gem has a semantic index (`_index/embeddings.npz`, built by
 okf_embed.py) and model2vec is installed, results fuse BM25 + cosine via RRF —
 "iniciação" then finds "Dīkṣā". Falls back to pure BM25 otherwise (a note on
 stderr says why). Force modes: --semantic (vectors only) / --no-semantic.
 
-Run:  uv run okf_search.py <brain> "query" [--top 8] [--json]
+Run:  uv run okf_search.py <gem> "query" [--top 8] [--json]
 """
 from __future__ import annotations
 
@@ -79,10 +79,10 @@ def split_frontmatter(text: str):
     return {}, text
 
 
-def build_index(brain: Path):
+def build_index(gem: Path):
     docs = []
-    for p in sorted(brain.rglob("*.md")):
-        rel = p.relative_to(brain).as_posix()
+    for p in sorted(gem.rglob("*.md")):
+        rel = p.relative_to(gem).as_posix()
         if p.name in RESERVED or is_meta(rel):
             continue
         meta, body = split_frontmatter(p.read_text(encoding="utf-8").lstrip("﻿"))
@@ -120,12 +120,12 @@ def bm25(docs, query: str, top: int):
     return out[:top]
 
 
-def semantic_ranks(brain: Path, query: str, doc_ids: set[str]):
-    """[(concept_id, cosine)] via the brain's static-embedding sidecar, or
+def semantic_ranks(gem: Path, query: str, doc_ids: set[str]):
+    """[(concept_id, cosine)] via the gem's static-embedding sidecar, or
     (None, reason) when unavailable — search then stays lexical."""
-    idx = brain / "_index" / "embeddings.npz"
+    idx = gem / "_index" / "embeddings.npz"
     if not idx.exists():
-        return None, "no semantic index (build one: okf_embed.py <brain>)"
+        return None, "no semantic index (build one: okf_embed.py <gem>)"
     try:
         import numpy as np
         from model2vec import StaticModel
@@ -162,24 +162,24 @@ def snippet(body: str, query: str, width: int = 150) -> str:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="BM25 search inside an OKF brain (diacritic-folded).")
-    ap.add_argument("brain", type=Path)
+    ap = argparse.ArgumentParser(description="BM25 search inside an OKF gem (diacritic-folded).")
+    ap.add_argument("gem", type=Path)
     ap.add_argument("query")
     ap.add_argument("--top", type=int, default=8)
     ap.add_argument("--semantic", action="store_true", help="rank by vectors only (needs okf_embed index)")
     ap.add_argument("--no-semantic", action="store_true", help="pure BM25, ignore any semantic index")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
-    if not args.brain.is_dir():
-        print(f"error: {args.brain} is not a directory", file=sys.stderr)
+    if not args.gem.is_dir():
+        print(f"error: {args.gem} is not a directory", file=sys.stderr)
         return 2
 
-    docs = build_index(args.brain)
+    docs = build_index(args.gem)
     by_id = {d["id"]: d for d in docs}
     bm_hits = bm25(docs, args.query, max(args.top * 4, 24))
 
     sem, why = ((None, "disabled (--no-semantic)") if args.no_semantic
-                else semantic_ranks(args.brain, args.query, set(by_id)))
+                else semantic_ranks(args.gem, args.query, set(by_id)))
     if sem is None and (args.semantic or not args.no_semantic):
         if args.semantic:
             print(f"error: --semantic unavailable — {why}", file=sys.stderr)
@@ -218,9 +218,9 @@ def main() -> int:
                          ensure_ascii=False, indent=2))
         return 0
     if not hits:
-        print(f"no match for {args.query!r} in {len(docs)} concepts (lexical search — try the term the brain itself uses)")
+        print(f"no match for {args.query!r} in {len(docs)} concepts (lexical search — try the term the gem itself uses)")
         return 1
-    print(f"{len(hits)} hit(s) for {args.query!r} — {args.brain.name}, {len(docs)} concepts")
+    print(f"{len(hits)} hit(s) for {args.query!r} — {args.gem.name}, {len(docs)} concepts")
     for i, (s, d) in enumerate(hits, 1):
         sig = "+".join(sorted(signals.get(d["id"], []))) or "bm25"
         print(f"  {i}. [{s:7.4f} {sig}] {d['id']} — {d['title']}")

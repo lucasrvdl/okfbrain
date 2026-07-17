@@ -23,11 +23,11 @@ SOFTWARE.
 ---
 
 This project vendors third-party work, retained under its own license:
-- The Open Knowledge Format specification (skills/okfbrain/reference/SPEC.md)
+- The Open Knowledge Format specification (skills/onexus/reference/SPEC.md)
   is (c) Google Cloud Data team, licensed Apache-2.0, vendored with attribution.
 
-Acknowledgment (no code shared): the earliest okfbrain tooling took its tool
-names and initial inspiration from okf-skills
+Acknowledgment (no code shared): the earliest tooling of this project (then
+named okfbrain) took its tool names and initial inspiration from okf-skills
 (https://github.com/scaccogatto/okf-skills) by Marco Boffo (MIT). The validator
 and graph view shipped here are independent implementations, rewritten from
 scratch; a line-level comparison against that project found no common code.

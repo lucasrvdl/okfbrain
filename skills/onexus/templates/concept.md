@@ -9,7 +9,7 @@ source_type: <digital | ocr | web | mixed | none>
 confidence: <high | medium | low — low for OCR/unverified verbatim>
 ---
 
-# <Overview heading, in the brain's language>
+# <Overview heading, in the Gem's language>
 
 <One idea per file, ~150–600 words, sourced. Link related concepts with RELATIVE
 links: [title](../area/concept.md) — at least 2 outgoing.>

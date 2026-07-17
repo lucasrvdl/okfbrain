@@ -1,7 +1,7 @@
 # EXAMPLES — one exemplary growth cycle (imitate the SHAPE, not the subject)
 
 The executor of a cycle behaves exactly like this. Subject here is a fictional
-"Stoicism brain, queue head = write practice/morning-preparation"; yours will differ.
+"Stoicism Gem, queue head = write practice/morning-preparation"; yours will differ.
 
 ## 1. OBSERVE
 Read `_loop-state.md`: standing orders say content in the user's language,
@@ -11,7 +11,7 @@ Queue head: `1. write practice/morning-preparation — source: _sources/meditati
 ## 2. EVIDENCE FIRST (before any writing)
 The source is already local. Stage the exact passage byte-exact:
 
-    python3 <SKILL_DIR>/scripts/okf_excerpt.py "<abs>/_sources/meditations.md" "<brain>" \
+    python3 <SKILL_DIR>/scripts/okf_excerpt.py "<abs>/_sources/meditations.md" "<gem>" \
       "references/meditations-ii-1.md" --from "Begin the morning by saying" --to "and to act against" \
       --title "Meditations II.1 — morning preparation" --citation "Marcus Aurelius, Meditations, trans. G. Long" \
       --source-type digital --confidence high
@@ -52,14 +52,14 @@ created — not typed. Confidence stays `medium` + tag `needs-review` (ceiling).
 
 ## 4. VERIFY (mechanical — fix anything that fails before moving on)
 
-    python3 <SKILL_DIR>/scripts/okf_verify.py "<brain>" --concept practice/morning-preparation --strict
-    python3 <SKILL_DIR>/scripts/okf_validate.py "<brain>"
+    python3 <SKILL_DIR>/scripts/okf_verify.py "<gem>" --concept practice/morning-preparation --strict
+    python3 <SKILL_DIR>/scripts/okf_validate.py "<gem>"
 
 ## 5. RECORD
 - `_loop-state.md`: ledger `+ c7 practice/morning-preparation`; queue: remove
   item 1; map: `morning-preparation [x]`; no new dead-ends.
 - Update `practice/index.md` with the new entry.
-- `python3 <SKILL_DIR>/scripts/okf_log.py "<brain>" --kind Loop --agent "<harness>" --model "<model>" --note "c7: practice/morning-preparation (Meditations II.1 verbatim embedded)"`
+- `python3 <SKILL_DIR>/scripts/okf_log.py "<gem>" --kind Loop --agent "<harness>" --model "<model>" --note "c7: practice/morning-preparation (Meditations II.1 verbatim embedded)"`
 
 ## 6. REPORT (one line, nothing else)
     improved: practice/morning-preparation (Meditations II.1 staged + verbatim verified)

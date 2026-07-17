@@ -5,7 +5,7 @@
 # ///
 """Stamp provenance (source_type + confidence) into OKF concept frontmatter, in bulk.
 
-Provenance is the okfbrain differentiator: every concept carries WHERE it came from
+Provenance is the onexus differentiator: every concept carries WHERE it came from
 and HOW trustworthy it is, so fidelity becomes queryable/visible instead of prose.
 
   source_type: digital | ocr | web | mixed | none
@@ -18,7 +18,7 @@ Usage:
   uv run okf_stamp.py <bundle> <relpath>=<source_type>:<confidence> [...] [--default st:conf]
 
 Example:
-  uv run okf_stamp.py ./my-brain \\
+  uv run okf_stamp.py ./my-gem \\
      sources/primary-text.md=digital:high \\
      sources/scanned-edition.md=ocr:low \\
      --default web:medium

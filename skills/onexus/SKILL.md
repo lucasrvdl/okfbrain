@@ -1,25 +1,26 @@
 ---
-name: okfbrain
+name: onexus
 description: >-
-  Build and maintain fidelity-first digital "brains" — OKF knowledge bases: folders
+  Build and maintain fidelity-first digital "Gems" — OKF knowledge bases: folders
   of cross-linked markdown any AI can read — and grow them to full field coverage,
-  autonomously, in audit→expand loops.
+  autonomously, in audit→expand loops. (Formerly okfbrain: a "brain"/"cérebro"
+  is now called a Gem.)
   ONE intent-driven skill: say what you want in natural language (learn a subject,
   deepen it, fix/add a concept, ask it questions, audit, teach from it, merge
-  brains, or loop) and it applies the OKF method with per-domain fidelity,
-  provenance, and explicit gaps. Triggers: "/okfbrain ...", "learn about X" /
-  "aprenda sobre X", "build a brain" / "monte um cérebro", "what does the brain
-  say about X" / "o que o cérebro diz sobre X", "ingest this source" / "ingere
-  essa fonte no cérebro", "audit" / "audita", "teach me" / "me ensina", "merge" /
+  Gems, or loop) and it applies the OKF method with per-domain fidelity,
+  provenance, and explicit gaps. Triggers: "/onexus ...", "learn about X" /
+  "aprenda sobre X", "build a Gem" / "monte uma Gem", "what does the Gem
+  say about X" / "o que a Gem diz sobre X", "ingest this source" / "ingere
+  essa fonte na Gem", "audit" / "audita", "teach me" / "me ensina", "merge" /
   "junta", "keep improving in a loop" / "fica melhorando em loop".
 user-invocable: true
 argument-hint: "<what you want, in natural language> (e.g. learn about X using these sources)"
 allowed-tools: Read Write Edit Bash Grep Glob WebSearch WebFetch AskUserQuestion
 ---
 
-# okfbrain — fidelity-first digital "brains" in the Open Knowledge Format
+# onexus — fidelity-first digital "Gems" in the Open Knowledge Format
 
-A "brain" here is a metaphor, and a modest one: just a folder of cross-linked
+A "Gem" here is a metaphor, and a modest one: just a folder of cross-linked
 markdown files a human or any AI can read, query and extend. No magic implied.
 
 ONE skill, driven by INTENT: the user says what they want in plain language; you
@@ -28,7 +29,7 @@ Open Knowledge Format v0.1 — `reference/SPEC.md` is the normative truth; read 
 before non-trivial structural work. **Loop / grow-to-done intent ⇒ read
 `reference/LOOP.md` first — MANDATORY, every time it isn't verbatim in context.**
 
-**Prime directive — every brain is:**
+**Prime directive — every Gem is:**
 1. **FAITHFUL** — every claim sourced; verbatim where the profile demands; no
    invention, ever. Fidelity is never traded for size.
 2. **BIG** — it covers the FIELD. Map the subject to an authoritative outline and
@@ -39,20 +40,23 @@ before non-trivial structural work. **Loop / grow-to-done intent ⇒ read
    the uncovered rest of the field in Gaps.
 3. **SELF-EXPANDING** — map, queue, and state live ON DISK, so ANY model (Opus,
    Sonnet, Haiku, another vendor's) under ANY harness (Claude Code, Codex, Gemini
-   CLI, a plain script) can open the brain cold and keep growing it by following
+   CLI, a plain script) can open the Gem cold and keep growing it by following
    them. Write every handoff as if a smaller model in a different harness
    executes it.
 4. **AUTONOMOUS** — act without asking. Ask ONLY before removing/overwriting
    existing content, or on a genuine scope fork. Never stall on a question you can
    answer with the conservative faithful choice — record it and keep working.
 
-## What a "brain" is
+## What a "Gem" is
 
-An OKF bundle — default base **`~/Documents/OKFBrain/<brain>/`** (same path on
-macOS/Windows/Linux; a `Desktop/OKFBrain` shortcut may point there). The user may
-save a brain **anywhere** by saying so. A brain is a folder of `.md` concept files
+An OKF bundle — default base **`~/Documents/Onexus/<gem>/`** (same path on
+macOS/Windows/Linux; a `Desktop/Onexus` shortcut may point there). Legacy base
+`~/Documents/OKFBrain/` (this skill's pre-rebrand home): if it exists and
+`~/Documents/Onexus` does not, KEEP using it — never split Gems across two
+bases. The user may
+save a Gem **anywhere** by saying so. A Gem is a folder of `.md` concept files
 (**1 concept = 1 file**) with YAML frontmatter, cross-linked, navigable by any AI,
-by Obsidian, and by the user. One subject = one brain; umbrellas nest brains.
+by Obsidian, and by the user. One subject = one Gem; umbrellas nest Gems.
 
 ## NON-NEGOTIABLE directives (always, regardless of intent)
 
@@ -61,7 +65,7 @@ by Obsidian, and by the user. One subject = one brain; umbrellas nest brains.
   traces to a source you actually read; if you can't source it, it's a gap, not a
   guess.
 - **Verbatim blocks are never typed** — any model, any size: they are byte-copied
-  by `okf_excerpt.py` from a source file saved in the brain (`references/`,
+  by `okf_excerpt.py` from a source file saved in the Gem (`references/`,
   `_sources/`), and `okf_verify.py` checks the match mechanically.
 - **Contradictions are flagged, never silently resolved.** New evidence that
   contradicts an existing concept ⇒ add a `# Contradiction` (or `# Contradição`)
@@ -76,7 +80,7 @@ by Obsidian, and by the user. One subject = one brain; umbrellas nest brains.
   low.
 - **Validate at the end of every run that wrote files**; fix every ERROR. Warnings
   on `_`-meta files are tolerated noise — never "fix" meta files to silence them.
-- **Brain content in the user's language** (default: the language of their
+- **Gem content in the user's language** (default: the language of their
   request). The framework is English; sacred texts keep original script +
   transliteration.
 - **Cross-links are standard markdown RELATIVE links.** Same folder =
@@ -95,15 +99,15 @@ by Obsidian, and by the user. One subject = one brain; umbrellas nest brains.
 ## Resolve ONCE per session, then reuse (cache in `_loop-state.md` when looping)
 
 - **SKILL_DIR** = the directory this SKILL.md lives in — you just read it, so you
-  know the path. Canonical install: `~/.claude/skills/okfbrain`; other harnesses
-  may vendor it elsewhere (search for `**/okfbrain/SKILL.md` if unsure). Do NOT
+  know the path. Canonical install: `~/.claude/skills/onexus`; other harnesses
+  may vendor it elsewhere (search for `**/onexus/SKILL.md` if unsure). Do NOT
   rely on `$CLAUDE_SKILL_DIR` — it is often unset.
 - **RUN** = `uv run <script>` if uv exists; else `py -3.11 <script>` on Windows /
   `python3 <script>` elsewhere (needs `pyyaml`). Test once; reuse the winner.
 - **TODAY** = system date (`date -Iseconds` / `Get-Date -Format o`), fetched once.
-- **Existing-brain check** — before any create, list the TARGET base (the folder
+- **Existing-Gem check** — before any create, list the TARGET base (the folder
   this run saves to: the user-given location if any, else the default base): if
-  the subject's brain already exists there, this is an EXPAND — never a duplicate
+  the subject's Gem already exists there, this is an EXPAND — never a duplicate
   folder, never an overwrite.
 
 ## Fidelity profile (choose per subject; see `PROFILES.md`)
@@ -112,14 +116,14 @@ sacred · health · legal · culinary · technical · history · philosophy · g
 the right rigor per kind of knowledge. The user may force it ("profile: health").
 In doubt between two, the stricter wins.
 
-## Anatomy of a great brain (the quality bar)
+## Anatomy of a great Gem (the quality bar)
 
-- **Concepts live in AREA FOLDERS, never loose in the brain root** — even a small
-  brain groups into 2–3 areas (the root holds only `index.md`, `log.md`,
+- **Concepts live in AREA FOLDERS, never loose in the Gem root** — even a small
+  Gem groups into 2–3 areas (the root holds only `index.md`, `log.md`,
   `references/`, `_`-meta, `viz.html`). Consistent shape at any size.
 - **Atomic concepts** — one idea per file (~150–600 words of body). If a body
   explains 3+ separable, separately-sourceable ideas ⇒ SPLIT into linked child
-  concepts. This is how brains get big honestly.
+  concepts. This is how Gems get big honestly.
 - **Typed nodes** — vary `type` beyond `Concept`: `Person`, `Text`, `Practice`,
   `Method`, `Debate`, `Case`, `Glossary`, `Timeline`… A typed graph is a queryable
   graph. One file = one `type`: a mixed case takes the type of what the file
@@ -137,7 +141,7 @@ In doubt between two, the stricter wins.
 
 ### Gaps (exact format, in the root `index.md`)
 
-Heading in the brain's language (`# Lacunas` in PT, `# Gaps` in EN), entries:
+Heading in the Gem's language (`# Lacunas` in PT, `# Gaps` in EN), entries:
 
 ```
 - [ ] <missing topic> — <which source is needed / why it's missing>
@@ -188,20 +192,20 @@ Closed gaps: flip to `- [x]` and move the line to `log.md` on the next pass.
    `viz.html` whenever the graph changed, then report in the user's language:
    profile · sources used · #concepts by area · the honest gap list · paths ·
    and **the growth offer**: one ready-to-run loop command (e.g.
-   `/okfbrain <brain> /loop`). If the user already asked for depth/completeness,
+   `/onexus <gem> /loop`). If the user already asked for depth/completeness,
    don't offer — continue into the loop yourself.
 
 ## Intents (INFER from the request — not separate commands)
 
 | Request looks like | Operation | Asking |
 |---|---|---|
-| learn/build X — no brain yet | **Create**: full method 1–8 | never |
-| learn X — brain already exists | **Expand** the existing brain (say so) | never |
+| learn/build X — no Gem yet | **Create**: full method 1–8 | never |
+| learn X — Gem already exists | **Expand** the existing Gem (say so) | never |
 | deepen / close gaps / grow area Y | **Expand** focused on Y, else worst gaps | never |
 | add / fix one concept | **Edit** — surgical; update index + log | never |
 | remove a concept | **Edit** — confirm FIRST | once |
-| what does the brain say about X? | **Ask** — answer FROM the brain; a miss triggers learn-on-miss | never |
-| ingest this URL / PDF / article / note | **Ingest** — absorb ONE source into the brain | never |
+| what does the Gem say about X? | **Ask** — answer FROM the Gem; a miss triggers learn-on-miss | never |
+| ingest this URL / PDF / article / note | **Ingest** — absorb ONE source into the Gem | never |
 | audit / review / check | **Audit** — READ-ONLY | never |
 | audit and fix | Audit, THEN fix ERRORs (+confirmed removals) | removals only |
 | teach / quiz / course / tour | **Teach** — read-only on knowledge; writes `_learning/` | never |
@@ -211,23 +215,23 @@ Closed gaps: flip to `- [x]` and move the line to `log.md` on the next pass.
 - **Ask** = quick factual consult: locate the concepts (`okf_search.py`, then read
   them), answer ONLY from what they say, and cite each claim's concept id
   (`area/concept`). Never top up silently from general knowledge — whatever the
-  brain lacks goes through **learn-on-miss** (next bullet). Beyond that, no files
+  Gem lacks goes through **learn-on-miss** (next bullet). Beyond that, no files
   are written — EXCEPT: if the answer synthesized something real that no concept
   states yet, OFFER in one line to save it as a concept (with the citations the
   answer already used). Explorations compound instead of evaporating in chat. (A
   longer session that turns into study ⇒ Teach.)
-- **Learn-on-miss** (default inside Ask — asking teaches the brain): when no
+- **Learn-on-miss** (default inside Ask — asking teaches the Gem): when no
   concept answers the question, or answers only part of it, don't stop at "it's
   a gap":
   1. **Declare the miss** in one line, answering whatever IS covered from the
-     brain as usual.
+     Gem as usual.
   2. **Research the missing part** as a micro-Expand: sources actually read
-     (user-pointed corpora first, then the web), at THIS brain's fidelity
+     (user-pointed corpora first, then the web), at THIS Gem's fidelity
      profile. Your memory of the subject is still not a source.
   3. **Validate per profile** — fact-check, refute risky claims before relaying
      them; anything the profile wants verbatim enters only via saved raw source
      + `okf_excerpt.py`, never from a fetch summary.
-  4. **Answer**, keeping brain-claims (concept ids) visibly apart from fresh
+  4. **Answer**, keeping Gem-claims (concept ids) visibly apart from fresh
      research (source citations).
   5. **Write it back**: dedup-search, then a proper concept in the right area
      (template frontmatter + provenance + ≥2 relative cross-links + area index
@@ -237,7 +241,7 @@ Closed gaps: flip to `- [x]` and move the line to `log.md` on the next pass.
      uncertain and recorded as a Gaps entry, NOT a concept — a declared gap
      beats a weak concept.
   Log the question in `_learning/sessions.md` (asked-and-missed = a coverage
-  signal for the next loop). The user can say "ask only" / "só o cérebro" to
+  signal for the next loop). The user can say "ask only" / "só a Gem" to
   skip research: then a miss is reported as a gap and nothing is written.
 - **Ingest** = absorb ONE given source (URL, PDF, file, pasted text) — the
   source-push twin of the map-driven Expand:
@@ -248,36 +252,36 @@ Closed gaps: flip to `- [x]` and move the line to `log.md` on the next pass.
   3. Find the 5–15 RELATED concepts (`okf_search.py`, hybrid) and UPDATE them:
      new evidence in, links wired both ways, contradictions flagged per the
      non-negotiable above.
-  4. New topics the source opens ⇒ concepts (small brains) or queue/map entries.
+  4. New topics the source opens ⇒ concepts (small Gems) or queue/map entries.
   5. Gates (verify --strict + validate), refresh `_index/` if present, and log
      `--kind Ingest` naming the source and every concept touched.
-- **Expand never duplicates:** before writing, search the brain
-  (`okf_search.py <brain> "<topic>"`, plus grep for exact strings); if a concept
+- **Expand never duplicates:** before writing, search the Gem
+  (`okf_search.py <gem> "<topic>"`, plus grep for exact strings); if a concept
   exists, deepen/split it instead of adding a twin. Update the parent concept +
   indexes + log.
 - **Audit** = validator `--json` + gap list + fidelity flags (`⚠` marks, missing
   sources, OCR, `confidence: low`, orphan concepts). **Never edit while
   auditing.**
-- **Teach** teaches ONLY what's in the brain, citing concepts; if it isn't there,
+- **Teach** teaches ONLY what's in the Gem, citing concepts; if it isn't there,
   say it's a gap — **don't fill from general knowledge**. A student question the
-  brain can't answer ⇒ note it (`_learning/sessions.md` to-revisit + Gaps) and
+  Gem can't answer ⇒ note it (`_learning/sessions.md` to-revisit + Gaps) and
   run learn-on-miss AFTER the session — mid-lesson, the lesson comes first.
   Modes: tour / course / deep-dive / socratic / quiz. Every session updates
   `_learning/`.
-- **Merge** = hierarchical umbrella: **COPY (don't move)** each brain into a
-  subfolder (skip `viz.html`; strip `okf_version` from each sub-brain's root
+- **Merge** = hierarchical umbrella: **COPY (don't move)** each Gem into a
+  subfolder (skip `viz.html`; strip `okf_version` from each sub-Gem's root
   `index.md`); the NEW root `index.md` carries `okf_version: "0.1"` and maps the
-  sub-brains; stitch real cross-links (`../../<other>/...`). Originals stay
+  sub-Gems; stitch real cross-links (`../../<other>/...`). Originals stay
   intact. Re-nesting allowed.
 
-## Embed sources (self-contained, portable brains)
+## Embed sources (self-contained, portable Gems)
 
 Prefer embedding the passage that **is** the concept (the verse, the law, the
 formula) verbatim under `references/` over pointing at a path on this machine —
-brains must travel. Byte-exact, via the excerpt script:
+Gems must travel. Byte-exact, via the excerpt script:
 
 ```bash
-<RUN> "<SKILL_DIR>/scripts/okf_excerpt.py" "<source-file>" "<brain>" "references/<name>.md" \
+<RUN> "<SKILL_DIR>/scripts/okf_excerpt.py" "<source-file>" "<gem>" "references/<name>.md" \
   --from "<start marker>" --to "<end marker>" --title "<Title>" --citation "<origin>"
 ```
 
@@ -294,12 +298,12 @@ source to a local file first (e.g. `curl -L <url> -o <file>`), then excerpt
 byte-exact from that file. No raw copy obtainable ⇒ the verbatim is a gap
 (`⚠ verify against source`), never a paraphrase.
 
-## Learning memory (`_learning/` — the brain as a tutor that remembers)
+## Learning memory (`_learning/` — the Gem as a tutor that remembers)
 
 - `progress.md` (type: Progress) — mastered / learning / not-yet-seen, mapped to
   concept ids — plus the **review schedule** (below).
 - `sessions.md` (type: Sessions) — dated log: topic, questions, hits, to-revisit.
-- `courses/<name>.md` (type: Course) — structured study paths through the brain.
+- `courses/<name>.md` (type: Course) — structured study paths through the Gem.
 
 Teaching or answering ⇒ UPDATE these (question asked + got it or not; move
 concepts across mastered/learning). Templates: `templates/learning-*.md`.
@@ -310,7 +314,7 @@ concepts across mastered/learning). Templates: `templates/learning-*.md`.
 (TODAY + interval). Start each teach session by checking for DUE reviews and
 quizzing those first. If the session has a to-do integration (e.g. a TickTick
 skill), OFFER ONCE per session to create the review tasks
-("Revisar <concept> — cérebro <brain>", due on the scheduled date) — never push
+("Revisar <concept> — Gem <gem>", due on the scheduled date) — never push
 tasks without that one yes.
 
 ## Edit log (provenance of changes)
@@ -320,62 +324,63 @@ Every change appends a dated `date · harness · model · action` entry to `log.
 puts harness/model in the entry line):
 
 ```bash
-<RUN> "<SKILL_DIR>/scripts/okf_log.py" "<brain>" --kind <Creation|Update|Expansion|Ingest|Embed|Edit|Learn|Merge|Deprecation|Loop> \
+<RUN> "<SKILL_DIR>/scripts/okf_log.py" "<gem>" --kind <Creation|Update|Expansion|Ingest|Embed|Edit|Learn|Merge|Deprecation|Loop> \
   --agent "<harness>" --model "<model>" --note "<what changed>"
 ```
 
 ## Versioning (optional — offer once, never impose)
 
-A brain is a folder, so git versions it for free. When creating a brain (or when
-asked), offer ONCE, in one line: *"version this brain with git?"* If yes:
-`git init` in the brain, commit after every run that wrote files
+A Gem is a folder, so git versions it for free. When creating a Gem (or when
+asked), offer ONCE, in one line: *"version this Gem with git?"* If yes:
+`git init` in the Gem, commit after every run that wrote files
 (`git add -A && git commit -m "<kind>: <note>"` — same note as the `log.md`
 entry), and for cross-machine sync offer a PRIVATE remote
-(`gh repo create <brain> --private --source .`). Never init, commit elsewhere,
+(`gh repo create <gem> --private --source .`). Never init, commit elsewhere,
 or push without that yes; `log.md` remains the human-readable history either way.
 
 ## The engine (deterministic — prefer scripts over judgment)
 
 In `<SKILL_DIR>/scripts/`, run with RUN (see "Resolve ONCE"):
-- `okf_validate.py <brain> [--strict] [--json]` — OKF v0.1 conformance; ERRORs
+- `okf_validate.py <gem> [--strict] [--json]` — OKF v0.1 conformance; ERRORs
   must be fixed, always.
-- `okf_status.py <brain> [--json]` — deterministic OBSERVE: counts by area/type,
+- `okf_status.py <gem> [--json]` — deterministic OBSERVE: counts by area/type,
   provenance histograms, orphans, thin nodes, UNCITED concepts, pending links,
   the Gaps section, loop-state summary. Start audits/expansions/loop cycles here.
-- `okf_search.py <brain> "<query>" [--top N] [--json]` — search inside the brain:
+- `okf_search.py <gem> "<query>" [--top N] [--json]` — search inside the Gem:
   BM25 diacritic-folded (`diksa` finds "Dīkṣā"), and HYBRID (+cosine via RRF)
   whenever `_index/embeddings.npz` exists — then synonyms work ("superhomem"
   finds Übermensch). Use it for Ask/Ingest, and ALWAYS before writing (dedup).
-- `okf_embed.py <brain> [--model M] [--rebuild]` — build/refresh the semantic
+- `okf_embed.py <gem> [--model M] [--rebuild]` — build/refresh the semantic
   index: static embeddings (CPU-only, no GPU/torch/LLM tokens; multilingual
-  model downloaded once), incremental by content hash, stored INSIDE the brain
+  model downloaded once), incremental by content hash, stored INSIDE the Gem
   (`_index/` is meta — it travels with the folder). Optional dep:
   `pip install model2vec numpy`; everything else works without it.
-- `okf_migrate.py <brain> [--profile X] [--apply] [--backup <dir>]` — normalize a
-  pre-v2 brain (root-index frontmatter, profile line, prose gaps → checkboxes,
+- `okf_migrate.py <gem> [--profile X] [--apply] [--backup <dir>]` — normalize a
+  pre-v2 Gem (root-index frontmatter, profile line, prose gaps → checkboxes,
   stray frontmatter). DRY-RUN by default; `--apply` writes; use `--backup`.
-- `okf_verify.py <brain> [--concept <id>] [--strict]` — MECHANICAL fidelity:
+- `okf_verify.py <gem> [--concept <id>] [--strict]` — MECHANICAL fidelity:
   citations present, every blockquote byte-matches a saved source under
   `references/`/`_sources/`, weasel-line lint. Run it on every concept you
   write; weak-model cycles run it `--strict`.
-- `okf_visualize.py <brain>` — self-contained interactive HTML graph (`viz.html`).
-- `okf_stamp.py <brain> <rel=source_type:confidence> ... [--default st:conf]` —
+- `okf_visualize.py <gem>` — self-contained interactive HTML graph (`viz.html`).
+- `okf_stamp.py <gem> <rel=source_type:confidence> ... [--default st:conf]` —
   bulk provenance.
 - `okf_excerpt.py …` — verbatim source embedding (usage above).
 - `okf_log.py …` — dated log entries (usage above).
-- `okf_selftest.py` — 24 black-box checks over a throwaway mini-brain; run it
+- `okf_selftest.py` — 24 black-box checks over a throwaway mini-Gem; run it
   after ANY change to the skill (CI runs it on every push).
-- `okf_loop.py <brain> (--cycles N|--minutes M|--until-dry|--forever)
+- `okf_loop.py <gem> (--cycles N|--minutes M|--until-dry|--forever)
   [--executor <name>] [--audit-executor <name>] [--miners N
   [--miner-executor <name>] [--no-integrate]]` — OPTIONAL headless driver for
   unattended runs WITHOUT this session (spawns a CLI agent per cycle; it does not
   inherit this session's access). `--miners N` = FAN-OUT mini-harness: N parallel
   miner agents per wave (ANY vendor via executors.json — DeepSeek, Ollama,
   OpenRouter…), write-fenced to `_staging/`, then a strong INTEGRATOR pass writes
-  the brain; `--no-integrate` mines one wave and hands `_staging/` to the master
+  the Gem; `--no-integrate` mines one wave and hands `_staging/` to the master
   session (doctrine: LOOP.md "Fan-out"). Executor NAMES live in `executors.json`
-  (SKILL_DIR; personal overrides in `~/.okfbrain/executors.json`;
-  `--list-executors` shows them) — one config, any master harness. Interactive
+  (SKILL_DIR; personal overrides in `~/.onexus/executors.json`, with legacy
+  `~/.okfbrain/` still read; `--list-executors` shows them) — one config, any
+  master harness. Interactive
   loops always use `reference/LOOP.md`, in-session.
 
 ## Templates
@@ -397,4 +402,4 @@ In `<SKILL_DIR>/scripts/`, run with RUN (see "Resolve ONCE"):
   (see LOOP.md "Fan-out").
 - Windows: `python3` usually doesn't exist (Store alias) — use `py -3.11`; the
   engine needs `pyyaml`. `viz.html` pulls Cytoscape/fcose/marked from a CDN
-  (internet needed to open it; the brain's data stays inside the file).
+  (internet needed to open it; the Gem's data stays inside the file).

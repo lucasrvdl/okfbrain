@@ -1,7 +1,7 @@
 ---
 type: Loop State
-title: <brain name> — loop state
-description: Durable working memory of the growth loop for this brain.
+title: <gem name> — loop state
+description: Durable working memory of the growth loop for this Gem.
 tags: [loop, meta]
 timestamp: <ISO 8601 — REAL system date>
 ---
@@ -20,7 +20,7 @@ reopen: re-challenge the map / pull from "Deepens".
 
 # Goal & scope (the yardstick)
 
-- **Brain:** <path> · **Profile:** <profile>
+- **Gem:** <path> · **Profile:** <profile>
 - **Field anchor:** <the authoritative EXTERNAL outline the map is drawn from —
   reference-work ToC / syllabus / taxonomy, researched, not recalled>
 - Done is measured against the FIELD, not against the sources you can read.

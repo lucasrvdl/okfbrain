@@ -1,21 +1,21 @@
 {
-  "name": "okfbrain",
-  "displayName": "okfbrain — digital \"brains\" in markdown",
-  "version": "0.12.0",
-  "description": "Build fidelity-first digital \"brains\" — OKF knowledge bases in plain markdown — and grow them to full field coverage, autonomously, in audit-expand loops: one phrase, any model, any harness. Per-domain fidelity profiles, provenance, explicit gaps, deterministic engine.",
+  "name": "onexus",
+  "displayName": "onexus — digital \"Gems\" in markdown",
+  "version": "0.13.0",
+  "description": "Build fidelity-first digital \"Gems\" — OKF knowledge bases in plain markdown — and grow them to full field coverage, autonomously, in audit-expand loops: one phrase, any model, any harness. Per-domain fidelity profiles, provenance, explicit gaps, deterministic engine.",
   "author": {
     "name": "Lucas Lucena",
     "url": "https://github.com/lucasrvdl"
   },
-  "homepage": "https://github.com/lucasrvdl/okfbrain",
-  "repository": "https://github.com/lucasrvdl/okfbrain",
+  "homepage": "https://github.com/lucasrvdl/onexus",
+  "repository": "https://github.com/lucasrvdl/onexus",
   "license": "MIT",
   "keywords": [
     "okf",
     "open-knowledge-format",
     "knowledge",
     "markdown",
-    "brain",
+    "gem",
     "fidelity",
     "provenance",
     "agents"

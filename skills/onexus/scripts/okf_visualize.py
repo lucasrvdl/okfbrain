@@ -391,7 +391,7 @@ input[type=range]:hover::-webkit-slider-thumb{background:var(--accent)}
 </aside>
 
 <div id="toast"></div>
-<div id="offline"><div>This graph needs internet on first open (d3 + marked come from a CDN).<br>The brain's data itself is embedded in this file.</div></div>
+<div id="offline"><div>This graph needs internet on first open (d3 + marked come from a CDN).<br>The gem's data itself is embedded in this file.</div></div>
 
 <script>
 const NODES=__NODES__, EDGES=__EDGES__;
@@ -809,7 +809,7 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden)sim.stop();
   else if(!S.freeze&&sim.alpha()>sim.alphaMin())sim.restart();});
 setInterval(()=>{if(hover||selected)retarget();},400); /* keep highlight honest after sim moves */
 retarget();refilter();
-if(!NODES.length){toast("This brain has no concepts yet.");}
+if(!NODES.length){toast("This gem has no concepts yet.");}
 /* test/debug hook */
 window.__okf={select,fit,enterLocal,state:S,nodes:NODES};
 })();

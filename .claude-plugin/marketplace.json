@@ -1,21 +1,21 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "lucasrvdl",
-  "description": "okfbrain — fidelity-first digital \"brains\" in markdown.",
+  "description": "onexus — fidelity-first digital \"Gems\" in markdown.",
   "owner": {
     "name": "Lucas Lucena"
   },
   "plugins": [
     {
-      "name": "okfbrain",
+      "name": "onexus",
       "source": "./",
-      "description": "Fidelity-first digital \"brains\" — OKF knowledge bases in plain markdown: build, grow (solo loops or parallel miners + strong integrator), ask, teach, audit — with mechanical verification, hybrid lexical+semantic search, and any-vendor executors.",
+      "description": "Fidelity-first digital \"Gems\" — OKF knowledge bases in plain markdown: build, grow (solo loops or parallel miners + strong integrator), ask, teach, audit — with mechanical verification, hybrid lexical+semantic search, and any-vendor executors.",
       "category": "documentation",
       "keywords": [
         "okf",
         "knowledge",
         "markdown",
-        "brain",
+        "gem",
         "fidelity",
         "agents"
       ],

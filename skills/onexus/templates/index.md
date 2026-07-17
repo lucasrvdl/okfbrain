@@ -5,7 +5,7 @@
      ---
      The root index.md body also records the fidelity profile on one line
      (e.g. "Perfil de fidelidade: general") and ends with the Gaps section
-     (heading in the brain's language, e.g. "# Lacunas"), entries like:
+     (heading in the Gem's language, e.g. "# Lacunas"), entries like:
      - [ ] <missing topic> — <which source is needed / why it's missing>
      Delete this comment. -->
 

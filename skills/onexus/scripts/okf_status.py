@@ -3,9 +3,9 @@
 # requires-python = ">=3.11"
 # dependencies = ["pyyaml>=6"]
 # ///
-"""okf_status.py — deterministic OBSERVE for an OKF brain.
+"""okf_status.py — deterministic OBSERVE for an OKF gem.
 
-One command that gives ANY model the same picture of a brain's state, so the
+One command that gives ANY model the same picture of a gem's state, so the
 Observe step of a growth loop never depends on who is looking:
   - concept counts (total, by area, by type)
   - provenance histograms (confidence, source_type)
@@ -17,7 +17,7 @@ Observe step of a growth loop never depends on who is looking:
 Meta files/dirs (`_` prefix) are reported separately and excluded from the
 knowledge graph, matching okf_visualize.py.
 
-Run:  uv run okf_status.py <brain> [--json]
+Run:  uv run okf_status.py <gem> [--json]
 """
 from __future__ import annotations
 
@@ -86,15 +86,15 @@ def section(text: str, heading_prefix: str) -> list[str]:
     return lines
 
 
-def scan(brain: Path) -> dict:
-    files = sorted(p for p in brain.rglob("*.md") if p.is_file())
+def scan(gem: Path) -> dict:
+    files = sorted(p for p in gem.rglob("*.md") if p.is_file())
     concepts: dict[str, dict] = {}   # rel -> {type, conf, stype, area}
     meta_files: list[str] = []
     outlinks: dict[str, list[str]] = {}
 
     knowledge = []
     for p in files:
-        rel = p.relative_to(brain).as_posix()
+        rel = p.relative_to(gem).as_posix()
         if p.name in RESERVED:
             continue
         if is_meta(rel):
@@ -123,8 +123,8 @@ def scan(brain: Path) -> dict:
                 tgt = t.lstrip("/")[:-3]
             else:
                 resolved = (p.parent / t).resolve()
-                tgt = resolved.relative_to(brain.resolve()).as_posix()[:-3] \
-                    if resolved.is_relative_to(brain.resolve()) else None
+                tgt = resolved.relative_to(gem.resolve()).as_posix()[:-3] \
+                    if resolved.is_relative_to(gem.resolve()) else None
             if tgt and tgt != cid:
                 outs.append(tgt)
         outlinks[cid] = outs
@@ -135,7 +135,7 @@ def scan(brain: Path) -> dict:
         for tgt in outs:
             if tgt in inbound:
                 inbound[tgt] += 1
-            elif tgt not in ids and not (brain / (tgt + ".md")).exists():
+            elif tgt not in ids and not (gem / (tgt + ".md")).exists():
                 pending.append({"from": cid, "target": tgt})  # file truly absent (§5.3)
 
     def hist(key: str) -> dict:
@@ -152,7 +152,7 @@ def scan(brain: Path) -> dict:
 
     # Gaps: checkbox lines anywhere in the root index.md
     gaps = {"open": [], "partial": [], "closed": [], "out_of_scope": []}
-    root_index = brain / "index.md"
+    root_index = gem / "index.md"
     if root_index.exists():
         _, body = split_frontmatter(root_index.read_text(encoding="utf-8").lstrip("﻿"))
         for line in body.splitlines():
@@ -165,7 +165,7 @@ def scan(brain: Path) -> dict:
 
     # Loop state
     ls = {"present": False}
-    ls_path = brain / "_loop-state.md"
+    ls_path = gem / "_loop-state.md"
     if ls_path.exists():
         _, body = split_frontmatter(ls_path.read_text(encoding="utf-8").lstrip("﻿"))
         status = [l.strip() for l in section(body, "STATUS") if l.strip()]
@@ -179,7 +179,7 @@ def scan(brain: Path) -> dict:
 
     n_sources = sum(1 for cid in concepts if cid.split("/")[0] in ("references", "_sources"))
     return {
-        "brain": str(brain),
+        "gem": str(gem),
         "concepts": len(concepts),
         "knowledge": len(concepts) - n_sources,
         "sources": n_sources,
@@ -199,20 +199,20 @@ def scan(brain: Path) -> dict:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Deterministic status/observe report for an OKF brain.")
-    ap.add_argument("brain", type=Path)
+    ap = argparse.ArgumentParser(description="Deterministic status/observe report for an OKF gem.")
+    ap.add_argument("gem", type=Path)
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
-    if not args.brain.is_dir():
-        print(f"error: {args.brain} is not a directory", file=sys.stderr)
+    if not args.gem.is_dir():
+        print(f"error: {args.gem} is not a directory", file=sys.stderr)
         return 2
 
-    s = scan(args.brain)
+    s = scan(args.gem)
     if args.json:
         print(json.dumps(s, ensure_ascii=False, indent=2))
         return 0
 
-    print(f"OKF status — {s['brain']}")
+    print(f"OKF status — {s['gem']}")
     print(f"  concepts: {s['knowledge']} knowledge (+{s['sources']} sources = {s['concepts']})   "
           f"edges: {s['edges']}   meta files: {len(s['meta_files'])}")
     print(f"  areas: " + ", ".join(f"{k} {v}" for k, v in s["by_area"].items()))

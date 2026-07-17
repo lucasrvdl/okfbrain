@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = ["pyyaml>=6"]
 # ///
-"""okf_migrate.py — normalize a pre-v2 OKF brain to the current canon. SAFE BY DEFAULT.
+"""okf_migrate.py — normalize a pre-v2 OKF gem to the current canon. SAFE BY DEFAULT.
 
 Fixes (only with --apply; default is a dry-run PLAN):
   1. Root index.md frontmatter -> exactly `okf_version` (extra keys dropped, reported).
@@ -17,7 +17,7 @@ Reports only (never auto-fixed — they need judgment or a different tool):
 
 --backup <dir>: before modifying a file, copy it there (mirrored relative path).
 
-Run:  uv run okf_migrate.py <brain> [--profile general] [--apply] [--backup <dir>]
+Run:  uv run okf_migrate.py <gem> [--profile general] [--apply] [--backup <dir>]
 """
 from __future__ import annotations
 
@@ -61,13 +61,13 @@ def split_fm(text: str):
 
 
 class Migrator:
-    def __init__(self, brain: Path, apply: bool, backup: Path | None):
-        self.brain, self.apply, self.backup = brain, apply, backup
+    def __init__(self, gem: Path, apply: bool, backup: Path | None):
+        self.gem, self.apply, self.backup = gem, apply, backup
         self.fixes: list[str] = []
         self.warns: list[str] = []
 
     def save(self, path: Path, text: str, what: str):
-        rel = path.relative_to(self.brain).as_posix()
+        rel = path.relative_to(self.gem).as_posix()
         self.fixes.append(f"{rel}: {what}")
         if not self.apply:
             return
@@ -157,12 +157,12 @@ class Migrator:
     def run(self, profile: str | None):
         self.args_profile = profile
         self.no_prov = 0
-        for p in sorted(self.brain.rglob("*.md")):
-            rel = p.relative_to(self.brain).as_posix()
+        for p in sorted(self.gem.rglob("*.md")):
+            rel = p.relative_to(self.gem).as_posix()
             if is_meta(rel):
                 continue
             if p.name == "index.md":
-                if p.parent == self.brain:
+                if p.parent == self.gem:
                     self.root_index(p)
                 else:
                     self.strip_fm(p, "§6 non-root index")
@@ -176,21 +176,21 @@ class Migrator:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Normalize a pre-v2 OKF brain (dry-run by default).")
-    ap.add_argument("brain", type=Path)
+    ap = argparse.ArgumentParser(description="Normalize a pre-v2 OKF gem (dry-run by default).")
+    ap.add_argument("gem", type=Path)
     ap.add_argument("--profile", help="fidelity profile to record in the root index if absent")
     ap.add_argument("--apply", action="store_true", help="write the fixes (default: plan only)")
     ap.add_argument("--backup", type=Path, help="copy each file here before modifying it")
     args = ap.parse_args()
-    if not args.brain.is_dir():
-        print(f"error: {args.brain} is not a directory", file=sys.stderr)
+    if not args.gem.is_dir():
+        print(f"error: {args.gem} is not a directory", file=sys.stderr)
         return 2
 
-    m = Migrator(args.brain, args.apply, args.backup)
+    m = Migrator(args.gem, args.apply, args.backup)
     m.run(args.profile)
 
     mode = "APPLIED" if args.apply else "PLAN (dry-run — pass --apply to write)"
-    print(f"okf-migrate — {args.brain.name} — {mode}")
+    print(f"okf-migrate — {args.gem.name} — {mode}")
     for f in m.fixes:
         print(f"  FIX  {f}")
     for w in m.warns:

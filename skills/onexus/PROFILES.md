@@ -1,4 +1,4 @@
-# Fidelity profiles — okfbrain
+# Fidelity profiles — onexus
 
 Each kind of knowledge needs a different kind of rigor. The skill detects the
 profile from the subject (or the user forces it with "...(profile: health)"). Each

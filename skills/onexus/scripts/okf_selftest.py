@@ -5,12 +5,12 @@
 # ///
 """okf_selftest.py — one command that proves the factory is sane.
 
-Builds a throwaway mini-brain in a temp dir and exercises every script as a
+Builds a throwaway mini-gem in a temp dir and exercises every script as a
 BLACK BOX (subprocess, like real callers do): validate, status, search,
 verify (blockquote match + prose-quote fail + strict exit codes), excerpt
 (happy path + empty-selector + missing --to guards), stamp (fill-only-missing),
 migrate (dry-run plan), log, and okf_loop's queue parser (continuation lines)
-+ brain lock. Run it after ANY change to the skill, on any machine:
++ gem lock. Run it after ANY change to the skill, on any machine:
 
     python3 okf_selftest.py        (or: py -3.11 / uv run)
 
@@ -48,18 +48,18 @@ def run(script: str, *args: str) -> subprocess.CompletedProcess:
                           errors="replace", timeout=120)
 
 
-def build_brain(root: Path) -> Path:
-    b = root / "selftest-brain"
+def build_gem(root: Path) -> Path:
+    b = root / "selftest-gem"
     (b / "area-a").mkdir(parents=True)
     (b / "references").mkdir()
     (b / "_learning").mkdir()
     (b / "index.md").write_text(
-        '---\nokf_version: "0.1"\n---\n\n# Selftest brain\n\n'
+        '---\nokf_version: "0.1"\n---\n\n# Selftest gem\n\n'
         "Fidelity profile: general\n\n"
         "# Areas\n\n* [Area A](area-a/) - test area\n\n"
         "# Gaps\n\n- [ ] future topic — needs source X\n- [-] out of topic — out of scope: test\n",
         encoding="utf-8")
-    (b / "log.md").write_text("# Update Log\n\n## 2026-01-01\n* **Creation**: selftest brain.\n",
+    (b / "log.md").write_text("# Update Log\n\n## 2026-01-01\n* **Creation**: selftest gem.\n",
                               encoding="utf-8")
     (b / "references" / "src.md").write_text(
         "---\ntype: Source\ntitle: Test source\ndescription: verbatim source\n"
@@ -98,7 +98,7 @@ def main() -> int:
     print(f"okf-selftest — scripts at {HERE}")
     tmp = Path(tempfile.mkdtemp(prefix="okf-selftest-"))
     try:
-        b = build_brain(tmp)
+        b = build_gem(tmp)
 
         # --- validate ---
         r = run("okf_validate.py", str(b), "--json")
@@ -159,7 +159,7 @@ def main() -> int:
               r.stdout[-120:])
 
         # --- migrate (dry-run plan on a legacy-style index) ---
-        legacy = tmp / "legacy-brain"
+        legacy = tmp / "legacy-gem"
         legacy.mkdir()
         (legacy / "index.md").write_text(
             "---\nokf_version: \"0.1\"\nextra: nope\n---\n\n# Legacy\n\n# Gaps\n\n* prose gap one\n",
@@ -197,7 +197,7 @@ def main() -> int:
               str(items)[:140])
         (b / ".okf-loop.lock").write_text("pid=0 host=test started=now", encoding="utf-8")
         r = run("okf_loop.py", str(b), "--cycles", "1", "--agent", "echo-nothing")
-        check("loop: brain lock refuses second run", r.returncode == 3 and "LOCKED" in (r.stderr + r.stdout),
+        check("loop: gem lock refuses second run", r.returncode == 3 and "LOCKED" in (r.stderr + r.stdout),
               f"rc={r.returncode}")
         (b / ".okf-loop.lock").unlink()
         r = run("okf_loop.py", str(b), "--list-executors")

@@ -3,21 +3,21 @@
 # requires-python = ">=3.11"
 # dependencies = ["pyyaml>=6", "numpy>=1.26", "model2vec>=0.3"]
 # ///
-"""okf_embed.py — build/refresh the brain's SEMANTIC index (static embeddings).
+"""okf_embed.py — build/refresh the gem's SEMANTIC index (static embeddings).
 
 Humble-hardware by design: Model2Vec static embeddings are a distilled lookup
 table — no attention, no torch, no GPU, no LLM tokens. Indexing a 1500-concept
-brain takes seconds on a laptop CPU; querying is instant. The default model is
+gem takes seconds on a laptop CPU; querying is instant. The default model is
 multilingual (~250MB, downloaded ONCE to the HF cache; offline afterwards).
 
-The index is a sidecar INSIDE the brain — `_index/embeddings.npz` (`_` = meta,
-so it travels with the brain and stays out of the graph/validation). It is
+The index is a sidecar INSIDE the gem — `_index/embeddings.npz` (`_` = meta,
+so it travels with the gem and stays out of the graph/validation). It is
 INCREMENTAL: only new/changed concepts are re-embedded (content hash).
 
 okf_search.py automatically goes HYBRID (BM25 + cosine, RRF fusion) whenever
 this index exists — "iniciação" then finds "Dīkṣā".
 
-Run:  uv run okf_embed.py <brain> [--model NAME] [--rebuild] [--json]
+Run:  uv run okf_embed.py <gem> [--model NAME] [--rebuild] [--json]
       (pip users: pip install model2vec numpy)
 Model override: --model or the OKF_EMBED_MODEL environment variable.
 """
@@ -75,11 +75,11 @@ def doc_text(meta: dict, body: str) -> str:
     return f"{title}\n{desc}\n{tags}\n{heads}\n{body[:1500]}"
 
 
-def collect(brain: Path) -> list[tuple[str, str, str]]:
+def collect(gem: Path) -> list[tuple[str, str, str]]:
     """[(concept_id, content_hash, text_to_embed)] — same corpus as okf_search."""
     out = []
-    for p in sorted(brain.rglob("*.md")):
-        rel = p.relative_to(brain).as_posix()
+    for p in sorted(gem.rglob("*.md")):
+        rel = p.relative_to(gem).as_posix()
         if p.name in RESERVED or is_meta(rel):
             continue
         raw = p.read_text(encoding="utf-8", errors="replace").lstrip("﻿")
@@ -90,14 +90,14 @@ def collect(brain: Path) -> list[tuple[str, str, str]]:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Build/refresh a brain's semantic index (static embeddings).")
-    ap.add_argument("brain", type=Path)
+    ap = argparse.ArgumentParser(description="Build/refresh a gem's semantic index (static embeddings).")
+    ap.add_argument("gem", type=Path)
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--rebuild", action="store_true", help="ignore the existing index and re-embed everything")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
-    if not args.brain.is_dir():
-        print(f"error: {args.brain} is not a directory", file=sys.stderr)
+    if not args.gem.is_dir():
+        print(f"error: {args.gem} is not a directory", file=sys.stderr)
         return 2
 
     try:
@@ -109,8 +109,8 @@ def main() -> int:
               "Lexical search keeps working without it.", file=sys.stderr)
         return 3
 
-    docs = collect(args.brain)
-    idx_path = args.brain / INDEX_REL
+    docs = collect(args.gem)
+    idx_path = args.gem / INDEX_REL
     old_ids: list[str] = []
     old_hashes: dict[str, str] = {}
     old_vecs = None
@@ -129,7 +129,7 @@ def main() -> int:
     kept = len(docs) - len(todo)
 
     if not todo and set(old_ids) == {cid for cid, _, _ in docs}:
-        msg = {"brain": str(args.brain), "concepts": len(docs), "embedded": 0,
+        msg = {"gem": str(args.gem), "concepts": len(docs), "embedded": 0,
                "kept": kept, "model": args.model, "index": str(idx_path)}
         print(json.dumps(msg, ensure_ascii=False) if args.json
               else f"index up-to-date — {len(docs)} concept(s), 0 re-embedded ({idx_path})")
@@ -159,7 +159,7 @@ def main() -> int:
     idx_path.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(idx_path, ids=np.array(ids), hashes=np.array(hashes),
                         vectors=mat, model=np.array(args.model), fmt=np.array("okf-embed-v1"))
-    msg = {"brain": str(args.brain), "concepts": len(docs), "embedded": len(todo),
+    msg = {"gem": str(args.gem), "concepts": len(docs), "embedded": len(todo),
            "kept": kept, "model": args.model, "dim": dim, "index": str(idx_path)}
     print(json.dumps(msg, ensure_ascii=False) if args.json
           else f"embedded {len(todo)} (kept {kept}) of {len(docs)} concept(s) "

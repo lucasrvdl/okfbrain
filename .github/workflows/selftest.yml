@@ -9,5 +9,5 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install pyyaml
-      - run: python -m py_compile skills/okfbrain/scripts/*.py
-      - run: python skills/okfbrain/scripts/okf_selftest.py
+      - run: python -m py_compile skills/onexus/scripts/*.py
+      - run: python skills/onexus/scripts/okf_selftest.py

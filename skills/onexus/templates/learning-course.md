@@ -1,7 +1,7 @@
 ---
 type: Course
 title: <Course title>
-description: A structured learning path through this brain.
+description: A structured learning path through this Gem.
 tags: [learning, course]
 timestamp: <ISO 8601, e.g. 2026-06-21T00:00:00Z>
 ---

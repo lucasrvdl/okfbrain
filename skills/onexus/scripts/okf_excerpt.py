@@ -3,16 +3,16 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""okf_excerpt.py — copy a VERBATIM passage from a source file into an OKF brain.
+"""okf_excerpt.py — copy a VERBATIM passage from a source file into an OKF gem.
 
-Makes brains self-contained & portable: instead of citing a file on the machine,
+Makes gems self-contained & portable: instead of citing a file on the machine,
 embed the passage that IS the concept (a verse, a prayer, a formula) as a
 first-class OKF concept (under references/). The copy is byte-exact — verbatim.
 
 Select the passage by line range, by start/end markers, or by a regex per line.
 
 Usage:
-  uv run okf_excerpt.py <source> <brain> <dest_relpath>
+  uv run okf_excerpt.py <source> <gem> <dest_relpath>
      (--lines A-B | --from "<start>" --to "<end>" | --grep "<regex>")
      --title "<Title>" [--type Source] [--source-type digital] [--confidence high]
      [--citation "<origin>"] [--heading "<body heading>"] [--timestamp <ISO>]
@@ -69,10 +69,10 @@ def pick(text: str, args) -> str:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Embed a verbatim source passage into an OKF brain.")
+    ap = argparse.ArgumentParser(description="Embed a verbatim source passage into an OKF gem.")
     ap.add_argument("source", type=Path)
-    ap.add_argument("brain", type=Path)
-    ap.add_argument("dest", help="relpath inside the brain, e.g. references/primary-source.md")
+    ap.add_argument("gem", type=Path)
+    ap.add_argument("dest", help="relpath inside the gem, e.g. references/primary-source.md")
     ap.add_argument("--lines")
     ap.add_argument("--from", dest="from_")
     ap.add_argument("--to")
@@ -92,13 +92,13 @@ def main() -> int:
 
     if not args.source.is_file():
         raise SystemExit(f"source not found: {args.source}")
-    if not args.brain.is_dir():
-        raise SystemExit(f"brain not found: {args.brain}")
+    if not args.gem.is_dir():
+        raise SystemExit(f"gem not found: {args.gem}")
 
     passage = pick(args.source.read_text(encoding="utf-8"), args).strip("\n")
     if not passage.strip():
         raise SystemExit("selected passage is empty — check your selector (--lines/--from/--to/--grep)")
-    out = args.brain / args.dest
+    out = args.gem / args.dest
     out.parent.mkdir(parents=True, exist_ok=True)
 
     fm = [f"type: {args.type}", f"title: {args.title}"]
@@ -115,7 +115,7 @@ def main() -> int:
     if args.citation:
         doc += f"\n# Source\n{args.citation}\n"
     out.write_text(doc, encoding="utf-8")
-    print(f"embedded {len(passage.splitlines())} lines -> {out.relative_to(args.brain)}  [{args.stype}/{args.confidence}]")
+    print(f"embedded {len(passage.splitlines())} lines -> {out.relative_to(args.gem)}  [{args.stype}/{args.confidence}]")
     return 0
 
 

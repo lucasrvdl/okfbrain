@@ -1,7 +1,8 @@
 # EXECUTORS — adding models, backends and API keys to the fleet
 
-The fleet is `executors.json` (skill dir = shipped defaults; `~/.okfbrain/executors.json`
-= personal overrides, wins on conflict). Each entry is just `"alias": "<agent CLI>"`.
+The fleet is `executors.json` (skill dir = shipped defaults; `~/.onexus/executors.json`
+= personal overrides, wins on conflict; the legacy `~/.okfbrain/` location is
+still read, with `~/.onexus` winning). Each entry is just `"alias": "<agent CLI>"`.
 `okf_loop.py --list-executors` shows the fleet; `--executor <alias>` uses one.
 
 **GOLDEN RULE: no API keys in executors.json** — it is versioned/shared. Keys live in
@@ -110,10 +111,10 @@ A bare LLM call (`ollama run`, `curl` to a chat API) is NOT an executor — no h
 1. Echo test: `opencode run --model <x> "Responda apenas: OK"`.
 2. Non-interactive permissions: opencode needs the `permission: allow` block in
    opencode.jsonc (edit/bash/webfetch/external_directory) or it auto-rejects tools.
-3. **Admission test** (the real gate): 1–2 cycles on a scratch/pilot brain,
-   `okf_loop.py <brain> --cycles 2 --executor <alias> --confidence-ceiling medium`,
+3. **Admission test** (the real gate): 1–2 cycles on a scratch/pilot Gem,
+   `okf_loop.py <gem> --cycles 2 --executor <alias> --confidence-ceiling medium`,
    then a strong-model audit of the delta. Approve if the audit demote-rate is low
-   (~≤20%) and okf_verify/validate pass. Record the verdict in the brain's log.
+   (~≤20%) and okf_verify/validate pass. Record the verdict in the Gem's log.
 
 Batch-size note: when a MASTER agent drives okf_loop from inside a harness turn,
 invoke it as repeated `--cycles 1` (multi-cycle batches can exceed the harness
@@ -122,15 +123,15 @@ shell timeout of ~10 min). From a plain terminal, any batch size works.
 ## Fan-out (parallel miners)
 
 Any alias above can be a MINER — this is how non-Claude models (DeepSeek,
-Ollama, OpenRouter…) work for a brain in parallel:
+Ollama, OpenRouter…) work for a Gem in parallel:
 
 ```
-okf_loop.py <brain> --cycles 3 --miners 6 --miner-executor flash --integrate-executor audit
-okf_loop.py <brain> --cycles 1 --miners 6 --no-integrate   # master session integrates _staging/
+okf_loop.py <gem> --cycles 3 --miners 6 --miner-executor flash --integrate-executor audit
+okf_loop.py <gem> --cycles 1 --miners 6 --no-integrate   # master session integrates _staging/
 ```
 
 Miners are write-fenced to `_staging/<slug>/` (draft + raw sources); only the
-integrator writes the brain. Prefer stateless miners (recipe 7's `--no-session`
+integrator writes the Gem. Prefer stateless miners (recipe 7's `--no-session`
 pi aliases) for big waves — CLIs with a shared session store can lock under
 concurrency. Doctrine: LOOP.md "Fan-out". Timing note from a
 harness turn: one wave lasts about as long as its SLOWEST miner — with the

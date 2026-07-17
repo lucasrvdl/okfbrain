@@ -1,5 +1,5 @@
 {
-  "$comment": "okfbrain executor profiles — friendly names for agent CLIs used by okf_loop.py (--executor NAME). Shipped defaults live here (SKILL_DIR/executors.json); personal overrides go in ~/.okfbrain/executors.json (same shape, wins on conflict). 'default' names the executor used when none is passed. Placeholders <...> must be edited before use. Never put API keys in this file — they live in your agent CLI's own vault or in environment variables.",
+  "$comment": "onexus executor profiles — friendly names for agent CLIs used by okf_loop.py (--executor NAME). Shipped defaults live here (SKILL_DIR/executors.json); personal overrides go in ~/.onexus/executors.json (same shape, wins on conflict; the legacy ~/.okfbrain/ location is still read, ~/.onexus winning). 'default' names the executor used when none is passed. Placeholders <...> must be edited before use. Never put API keys in this file — they live in your agent CLI's own vault or in environment variables.",
   "default": "haiku",
   "executors": {
     "haiku": "claude -p --allowedTools Bash(py:*),Bash(uv:*),WebFetch,WebSearch --permission-mode acceptEdits --model haiku",
